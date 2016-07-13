@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_package = "my.tests.grpc.proto";
+option java_outer_classname = "TestGrpcService";
+option java_multiple_files = true;
+
+import "Enum.proto";
+import "google/protobuf/empty.proto";
+
+message SimpleResponse {
+  Status status = 1;
+  string msg = 2;
+}
+
+service TestService {
+  rpc mySyncCall (google.protobuf.Empty) returns (stream SimpleResponse) {};
+
+  rpc myAsyncCall (google.protobuf.Empty) returns (stream SimpleResponse) {};
+
+}
