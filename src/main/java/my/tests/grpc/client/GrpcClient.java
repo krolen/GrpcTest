@@ -43,7 +43,8 @@ public class GrpcClient {
 
         Iterator<SimpleResponse> iterator = blockingStub.mySyncCall(Empty.getDefaultInstance());
         while (iterator.hasNext()) {
-            System.out.println(iterator.next().toString());
+            SimpleResponse next = iterator.next();
+            System.out.println(next.toString());
         }
 
     }

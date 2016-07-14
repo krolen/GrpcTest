@@ -4,12 +4,28 @@ option java_package = "my.tests.grpc.proto";
 option java_outer_classname = "TestGrpcService";
 option java_multiple_files = true;
 
-import "Enum.proto";
+//import "Enum.proto";
 import "google/protobuf/empty.proto";
 
 message SimpleResponse {
-  Status status = 1;
-  string msg = 2;
+  message Data {
+    string textData = 1;
+    int32 intData = 2;
+  }
+
+  message StatusMessage {
+    enum StatusEnum {
+      COMMENT = 0;
+      ERROR = 1;
+    }
+    StatusEnum status = 1;
+    string comment = 2;
+  }
+
+  oneof content {
+    Data data = 1;
+    StatusMessage statusMessage = 2;
+  }
 }
 
 service TestService {
