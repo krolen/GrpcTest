@@ -15,7 +15,7 @@ import java.util.Iterator;
  */
 public class GrpcClient {
     public static void main(String[] args) {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 5000).build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("127.0.0.1", 5000).usePlaintext(true).build();
         TestServiceGrpc.TestServiceBlockingStub blockingStub = TestServiceGrpc.newBlockingStub(channel);
         TestServiceGrpc.TestServiceStub asyncStub = TestServiceGrpc.newStub(channel);
 

@@ -27,7 +27,7 @@ public class TestServiceImpl implements TestServiceGrpc.TestService {
     @Override
     public void myAsyncCall(Empty request, StreamObserver<SimpleResponse> responseObserver) {
         for (int i = 0; i < 100; i++) {
-            SimpleResponse response = SimpleResponse.newBuilder().setMsg("Asynb " + i).setStatus(MyEnums.Status.ERROR).build();
+            SimpleResponse response = SimpleResponse.newBuilder().setMsg("Async " + i).setStatus(MyEnums.Status.ERROR).build();
             responseObserver.onNext(response);
             Uninterruptibles.sleepUninterruptibly(7, TimeUnit.SECONDS);
         }
