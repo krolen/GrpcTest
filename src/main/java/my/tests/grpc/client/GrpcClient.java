@@ -10,6 +10,7 @@ import io.grpc.stub.StreamObserver;
 import my.tests.grpc.proto.SimpleRequest;
 import my.tests.grpc.proto.SimpleResponse;
 import my.tests.grpc.proto.TestServiceGrpc;
+import my.tests.grpc.server.GrpcServer;
 
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
@@ -53,7 +54,7 @@ public class GrpcClient {
             @Override
             public void onNext(SimpleResponse value) {
                 count.incrementAndGet();
-                System.out.println("Got response " + value.getCount());
+                GrpcServer.printMsg("Got response " + value.getCount());
                 Uninterruptibles.sleepUninterruptibly(2, TimeUnit.SECONDS);
             }
 
@@ -77,7 +78,7 @@ public class GrpcClient {
             try {
                 finishFuture.get(4, TimeUnit.SECONDS);
                 continueProcess.set(false);
-                System.out.println("Client action completed");
+                GrpcServer.printMsg("Client action completed");
                 channel.shutdown();
                 if (!channel.awaitTermination(5, TimeUnit.SECONDS)) {
                     channel.shutdownNow();
@@ -89,7 +90,7 @@ public class GrpcClient {
                 Throwables.propagate(e);
             } catch (TimeoutException ignored) {
                 int value = count.get();
-                System.out.println("Emitting request entry " + value);
+                GrpcServer.printMsg("Emitting request entry " + value);
                 requestObserver.onNext(SimpleRequest.newBuilder().setCount(value).build());
             }
         }

@@ -69,12 +69,12 @@ public class TestServiceImpl extends TestServiceGrpc.TestServiceImplBase {
             while (count.get() < 32) {
                 if (continueProcess.get()) {
                     int i = count.incrementAndGet();
-                    System.out.println("Sending server msg " + i);
+                    GrpcServer.printMsg("Sending server msg " + i);
                     Uninterruptibles.sleepUninterruptibly(1, TimeUnit.SECONDS);
                     responseObserver.onNext(SimpleResponse.newBuilder().setCount(i).setStatusMessage(StatusMessage.newBuilder().setStatus(StatusEnum.COMMENT)).build());
                 }
             }
-            System.out.println("Server action completed");
+            GrpcServer.printMsg("Server action completed");
             responseObserver.onCompleted();
         });
 
@@ -84,18 +84,18 @@ public class TestServiceImpl extends TestServiceGrpc.TestServiceImplBase {
                 int sent = count.get();
                 int received = simpleRequest.getCount();
                 if (sent - received > 10) {
-                    System.out.println("Pausing emitting");
+                    GrpcServer.printMsg("Pausing emitting");
                     continueProcess.compareAndSet(true, false);
                 } else {
                     if (continueProcess.compareAndSet(false, true)) {
-                        System.out.println("Unpausing emitting");
+                        GrpcServer.printMsg("Unpausing emitting");
                     }
                 }
             }
 
             @Override
             public void onError(Throwable t) {
-                System.out.println("Error on server: " + t.getMessage());
+                GrpcServer.printMsg("Error on server: " + t.getMessage());
                 t.printStackTrace();
             }
 

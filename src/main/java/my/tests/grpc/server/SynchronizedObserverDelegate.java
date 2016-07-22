@@ -18,7 +18,7 @@ public class SynchronizedObserverDelegate<T> {
     }
 
     public void onNext(T data) {
-        try{
+        try {
             observerLock.lock();
             wrapped.onNext(data);
         } finally {
@@ -27,7 +27,7 @@ public class SynchronizedObserverDelegate<T> {
     }
 
     public <S> void onNext(Collection<S> data, Function<S, T> f) {
-        try{
+        try {
             observerLock.lock();
             for (S s : data) {
                 wrapped.onNext(f.apply(s));

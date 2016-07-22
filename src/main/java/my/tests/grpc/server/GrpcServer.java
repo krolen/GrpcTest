@@ -3,7 +3,6 @@ package my.tests.grpc.server;
 import com.google.common.util.concurrent.Uninterruptibles;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import my.tests.grpc.proto.TestServiceGrpc;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +15,7 @@ public class GrpcServer {
     public static void main(String[] args) throws IOException, InterruptedException {
         Server server = ServerBuilder.forPort(5000).addService(new TestServiceImpl()).build();
         server.start();
-        System.out.println("Server started");
+        GrpcServer.printMsg("Server started");
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
@@ -31,4 +30,7 @@ public class GrpcServer {
         server.awaitTermination();
     }
 
+    public static void printMsg(String msg) {
+        System.out.println(Thread.currentThread() + ": " + msg);
+    }
 }
