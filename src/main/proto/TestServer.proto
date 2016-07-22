@@ -4,33 +4,38 @@ option java_package = "my.tests.grpc.proto";
 option java_outer_classname = "TestGrpcService";
 option java_multiple_files = true;
 
-//import "Enum.proto";
 import "google/protobuf/empty.proto";
 
+message Data {
+  string textData = 1;
+  int32 intData = 2;
+}
+
+enum StatusEnum {
+  COMMENT = 0;
+  ERROR = 1;
+}
+
+message StatusMessage {
+  StatusEnum status = 1;
+  string comment = 2;
+}
+
 message SimpleResponse {
-  message Data {
-    string textData = 1;
-    int32 intData = 2;
-  }
-
-  message StatusMessage {
-    enum StatusEnum {
-      COMMENT = 0;
-      ERROR = 1;
-    }
-    StatusEnum status = 1;
-    string comment = 2;
-  }
-
   oneof content {
     Data data = 1;
     StatusMessage statusMessage = 2;
   }
+  int32 count = 3;
+}
+
+message SimpleRequest {
+  int32 count = 1;
 }
 
 service TestService {
   rpc mySyncCall (google.protobuf.Empty) returns (stream SimpleResponse) {};
 
-  rpc myAsyncCall (google.protobuf.Empty) returns (stream SimpleResponse) {};
+  rpc myAsyncCall (stream SimpleRequest) returns (stream SimpleResponse) {};
 
 }

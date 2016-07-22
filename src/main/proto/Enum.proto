@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-option java_package = "my.tests.grpc.proto";
-option java_outer_classname = "MyEnums";
-
-enum Status {
-  COMMENT = 0;
-  ERROR = 1;
-}
