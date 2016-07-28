@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class GrpcServer {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        Server server = ServerBuilder.forPort(5000).addService(new TestServiceImpl()).build();
+        Server server = ServerBuilder.forPort(5000).addService(new SimpleTestService()).build();
         server.start();
         GrpcServer.printMsg("Server started");
         Runtime.getRuntime().addShutdownHook(new Thread() {

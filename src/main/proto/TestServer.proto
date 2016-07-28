@@ -31,6 +31,7 @@ message SimpleResponse {
 
 message SimpleRequest {
   int32 count = 1;
+  bool stop = 2;
 }
 
 service TestService {
